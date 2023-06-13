@@ -9,29 +9,36 @@ program
 
 program.parse(process.argv);
 
+const { listContacts,
+    getContactById,
+    removeContact,
+    addContact}=require('./contacts.js');
+
 const argv = program.opts();
-const contacts = require('./db/contacts.json');
+
+const path = require('path');
+const contactsPath = path.join(__dirname,'contacts.json');
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       const allContacts =await listContacts();
-      console.log(allContacts);
+      console.table(allContacts);
       break;
 
     case "get":
-      const contact = await contacts.getContactById(id);
+      const contact = await getContactById(id);
       console.log(contact);
       break;
 
     case "add":
-      const newContact = await contacts.addContact({name, email, phone});
+      const newContact = await addContact(name, email, phone);
       console.log(newContact);
       break;
 
     case "remove":
-      const removedContact = await contacts.removeContact(id);
-      console.table(removedContact); 
+      const removedContact = await removeContact(id);
+      console.log(removedContact); 
       break;
 
     default:
