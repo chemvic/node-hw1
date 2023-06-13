@@ -12,12 +12,12 @@ program.parse(process.argv);
 const { listContacts,
     getContactById,
     removeContact,
-    addContact}=require('./contacts.js');
+    addContact}=require('./contacts');
 
 const argv = program.opts();
 
 const path = require('path');
-const contactsPath = path.join(__dirname,'contacts.json');
+const contactsPath = path.join(__dirname, 'db', 'contacts.json');
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
